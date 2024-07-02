@@ -3,13 +3,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Getting Started
 
 Para el funcionamiento completo del proyecto es necesario tener 
-Contenedor de MongoDB
-Contenedor de PostgreSQL
 
-Contenedor de [`sga-auth`](https://github.com/LuisCepeda/sga_auth) 
-Contenedor de [`sga-users`](https://github.com/LuisCepeda/sga_users)
-Contenedor de [`sga-geo`](https://github.com/LuisCepeda/sga_geo) (en desarrollo)
-Contenedor de [`sga-mpr`](https://github.com/LuisCepeda/sga_mpr)
+- Contenedor de [`sga-auth`](https://github.com/LuisCepeda/sga_auth) 
+- Contenedor de [`sga-users`](https://github.com/LuisCepeda/sga_users)
+- Contenedor de [`sga-geo`](https://github.com/LuisCepeda/sga_geo) (en desarrollo)
+- Contenedor de [`sga-mpr`](https://github.com/LuisCepeda/sga_mpr)
 
 
 First, run the development server:
