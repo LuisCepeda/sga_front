@@ -1,5 +1,5 @@
 'use client'
-//import { SessionProvider } from 'next-auth/react'
+import { SessionProvider } from 'next-auth/react'
 import { NextUIProvider } from '@nextui-org/react'
 import { ReactNode } from 'react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
@@ -10,12 +10,12 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
     return (
 
-        //<SessionProvider>
-        <NextUIProvider locale='co-CO'>
-            <NextThemesProvider attribute='class' defaultTheme='dark'>
-                {children}
-            </NextThemesProvider>
-        </NextUIProvider>
-        //</SessionProvider>
+        <SessionProvider>
+            <NextUIProvider locale='co-CO'>
+                <NextThemesProvider attribute='class' defaultTheme='dark'>
+                    {children}
+                </NextThemesProvider>
+            </NextUIProvider>
+        </SessionProvider>
     )
 }

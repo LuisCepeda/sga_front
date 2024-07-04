@@ -6,7 +6,7 @@ import { ReforestationProject } from '../../types/project'
 import { departments } from "@/constants/project"
 export async function getReforestationProjects() {
     try {
-        const res = await makeHttpRequest(`${process.env.REFORESTATION_PROJECTS_API}`, 'GET')
+        const res = await makeHttpRequest({ url: `${process.env.NEXT_PUBLIC_REFORESTATION_PROJECTS_API}`, method: 'GET' })
         if (res.Status.code === 200) return res.Data
     } catch (error) {
         console.error('fetching error:', error);
@@ -16,7 +16,7 @@ export async function getReforestationProjects() {
 
 export async function getReforestationProjectById(id: string) {
     try {
-        const res = await makeHttpRequest(`${process.env.REFORESTATION_PROJECTS_API}/${id}`, 'GET')
+        const res = await makeHttpRequest({ url: `${process.env.NEXT_PUBLIC_REFORESTATION_PROJECTS_API}/${id}`, method: 'GET' })
         if (res.Status.code === 200) return res.Data
     } catch (error) {
         console.error('fetching error:', error);
@@ -26,10 +26,10 @@ export async function getReforestationProjectById(id: string) {
 
 export async function getProjectsStatusSummary() {
     try {
-        const finishedProjectsResponse = await makeHttpRequest(`${process.env.REFORESTATION_PROJECTS_API}?status=Completado`, 'GET')
-        const activeProjectsResponse = await makeHttpRequest(`${process.env.REFORESTATION_PROJECTS_API}?status=Activo`, 'GET')
-        const plannedProjectsResponse = await makeHttpRequest(`${process.env.REFORESTATION_PROJECTS_API}?status=Planeado`, 'GET')
-        //const pausedProjectsResponse = await makeHttpRequest(`${process.env.REFORESTATION_PROJECTS_API }?status=Pausado`, 'GET')
+        const finishedProjectsResponse = await makeHttpRequest({ url: `${process.env.NEXT_PUBLIC_REFORESTATION_PROJECTS_API}?status=Completado`, method: 'GET' })
+        const activeProjectsResponse = await makeHttpRequest({ url: `${process.env.NEXT_PUBLIC_REFORESTATION_PROJECTS_API}?status=Activo`, method: 'GET' })
+        const plannedProjectsResponse = await makeHttpRequest({ url: `${process.env.NEXT_PUBLIC_REFORESTATION_PROJECTS_API}?status=Planeado`, method: 'GET' })
+        //const pausedProjectsResponse = await makeHttpRequest({url:`${process.env.NEXT_PUBLIC_REFORESTATION_PROJECTS_API }?status=Pausado`, method:'GET'})
 
         const finishedProjects = finishedProjectsResponse.Data?.length
         const activeProjects = activeProjectsResponse.Data?.length
@@ -57,7 +57,7 @@ export async function getTreesSummary() {
 export async function getClusters(body: bodyCluster): Promise<number[] | undefined> {
 
     try {
-        const res = await makeHttpRequest(`http://localhost:3000/api/clusters`, 'POST', body)
+        const res = await makeHttpRequest({ url: `http://localhost:3000/api/clusters`, method: 'POST', body })
         return res?.clusters
     } catch (error) {
         console.error('Error fetching clusters:', error)
@@ -67,7 +67,7 @@ export async function getClusters(body: bodyCluster): Promise<number[] | undefin
 
 export async function getInfoByDepartment(department: string) {
     try {
-        const res = await makeHttpRequest(`http://localhost:3000/api/info-geo-distribution?department=${department}`, 'GET')
+        const res = await makeHttpRequest({ url: `http://localhost:3000/api/info-geo-distribution?department=${department}`, method: 'GET' })
         return res
     } catch (error) {
         console.error('Error fetching departments data.')
@@ -120,7 +120,7 @@ export async function createProject(data) {
         }
 
 
-        const newProjectResponse = await makeHttpRequest(`${process.env.REFORESTATION_PROJECTS_API}`, 'POST', projectBody)
+        const newProjectResponse = await makeHttpRequest({ url: `${process.env.NEXT_PUBLIC_REFORESTATION_PROJECTS_API}`, method: 'POST', body: projectBody })
 
         if (newProjectResponse.Status.code !== 201) throw new Error('Error al crear el proyecto')
         return newProjectResponse.Data
@@ -173,7 +173,7 @@ export async function updateProject(projectId, data) {
         }
 
 
-        const newProjectResponse = await makeHttpRequest(`${process.env.REFORESTATION_PROJECTS_API}/${projectId}`, 'PATCH', projectBody)
+        const newProjectResponse = await makeHttpRequest({ url: `${process.env.NEXT_PUBLIC_REFORESTATION_PROJECTS_API}/${projectId}`, method: 'PATCH', body: projectBody })
         console.log('newProjectResponse.Status.Code', newProjectResponse.Status.code)
         if (newProjectResponse.Status.code !== 200) throw new Error('Error al editar el proyecto')
 
@@ -186,7 +186,7 @@ export async function updateProject(projectId, data) {
 export async function deleteProject(projectId: string) {
 
     try {
-        const response = await makeHttpRequest(`${process.env.REFORESTATION_PROJECTS_API}/${projectId.toString()}`, 'DELETE')
+        const response = await makeHttpRequest({ url: `${process.env.NEXT_PUBLIC_REFORESTATION_PROJECTS_API}/${projectId.toString()}`, method: 'DELETE' })
         console.log('response', response)
         return true
     } catch (error) {

@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
 
         const url = `https://www.datos.gov.co/resource/xdk5-pm3f.json?departamento=${department}`
 
-        const response = await makeHttpRequest(url, 'GET')
+        const response = await makeHttpRequest({ url, method: 'GET' })
 
         return NextResponse.json(response, { status: 200 })
     } catch (error: any) {

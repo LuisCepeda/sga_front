@@ -27,6 +27,7 @@ import { createProject, updateProject } from "@/lib/actions/project-actions"
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { formSchema } from "@/constants/schemas"
+import { Label } from "../ui/label"
 
 
 interface Props {
@@ -267,20 +268,22 @@ export default function ProjectForm({ existingProject }: Props) {
                                 />
                             </div>
                         </div>
-                        <div >
-
+                        <div className="flex flex-col gap-3">
+                            <Label>Lista de especies</Label>
                             <TreeList treeSpeciesList={treeSpecies} addTree={addTreeSpecies} removeTree={removeTreeSpecies} updateTree={handleTreeChange} />
                         </div>
 
                     </CardContent>
                     <CardFooter>
+                        <div className="flex flex-row justify-between">
 
-                        <Button type="button" className="ml-auto" onClick={() => { router.back() }}>
-                            Volver
-                        </Button>
-                        <Button type="submit" className="ml-auto">
-                            {existingProject ? "Editar Proyecto" : "Crear proyecto"}
-                        </Button>
+                            <Button type="button" className="ml-auto" onClick={() => { router.back() }}>
+                                Volver
+                            </Button>
+                            <Button type="submit" className="ml-auto">
+                                {existingProject ? "Editar Proyecto" : "Crear proyecto"}
+                            </Button>
+                        </div>
                     </CardFooter>
                 </Card >
             </form>

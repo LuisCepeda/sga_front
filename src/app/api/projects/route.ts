@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
     try {
-        const url = `${process.env.REFORESTATION_PROJECTS_API}`
-        const response = await makeHttpRequest(url, 'GET')
+        const url = `${process.env.NEXT_PUBLIC_REFORESTATION_PROJECTS_API}`
+        const response = await makeHttpRequest({ url, method: 'GET' })
 
         return NextResponse.json(response, { status: 200 })
     } catch (error: any) {

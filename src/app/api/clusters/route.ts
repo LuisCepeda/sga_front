@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     try {
-        const url = `${process.env.GEO_API}:/cluster`
+        const url = `${process.env.NEXT_PUBLIC_GEO_API}:/cluster`
         const body = await request.json()
-        const response = await makeHttpRequest(url, 'POST', body)
+        const response = await makeHttpRequest({ url, method: 'POST', body })
 
         return NextResponse.json(response, { status: 200 })
     } catch (error: any) {

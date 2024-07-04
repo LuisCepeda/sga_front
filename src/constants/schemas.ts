@@ -8,3 +8,9 @@ export const formSchema = z.object({
     village: z.string(),
     plantingArea: z.number({ message: "El area proyectada es requerida" }).min(0, { message: 'Required' })
 })
+
+
+export const loginSchema = z.object({
+    email: z.string().email({ message: 'Ingrese un correo valido' }),
+    password: z.string().min(1, { message: 'Ingrese la contraseña' })
+})
