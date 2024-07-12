@@ -1,0 +1,94 @@
+version: '3.5'
+
+services:
+  sgamongodb:
+    container_name: sga_mongodb
+    # image: mongodb
+    image: mongodb-raspberrypi4-unofficial-r7.0.4
+    env_file:
+      - .env.development.local
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${COMPOSE_MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${COMPOSE_MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${COMPOSE_MONGO_INITDB_DATABASE}
+    ports:
+      - '27017:27017'
+    networks:
+      - sga-network
+
+  sgapostgresqldb:
+    container_name: sga_postgresdb
+    image: postgres:latest
+    env_file:
+      - .env.development.local
+    environment:
+      - POSTGRES_USER=${COMPOSE_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${COMPOSE_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${COMPOSE_POSTGRES_DB}
+    ports:
+      - '5432:5432'
+    networks:
+      - sga-network
+
+  sgausers:
+    container_name: sga_users
+    image: luisc3151/sga-users:v1
+    env_file:
+      - .env.development.local
+    environment:
+      - PORT=${USERS_SERVICE_PORT}
+      - DATABASE_URL=${USERS_DATABASE_URL}
+    ports:
+      - '3001:3001'
+    depends_on:
+      - sgapostgresqldb
+    networks:
+      - sga-network
+
+  sgaauth:
+    container_name: sga_auth
+    image: luisc3151/sga-auth:v1
+    env_file:
+      - .env.development.local
+    environment:
+      - PORT=${AUTH_SERVICE_PORT}
+      - USERS_DOMAIN=${AUTH_USERS_DOMAIN}
+      - JWT_SECRET=${AUTH_JWT_SECRET}
+    ports:
+      - '3002:3002'
+    depends_on:
+      - sgapostgresqldb
+      - sga_users
+    networks:
+      - sga-network
+
+  sgageo:
+    container_name: sga_geo
+    image: luiscepeda/sga-geo:v1
+    env_file:
+      - .env.development.local
+    environment:
+      - PORT=${GEO_SERVICE_PORT}
+    ports:
+      - '5000:5000'
+    networks:
+      - sga-network
+
+  sgaprojects:
+    container_name: sga_mpr
+    image: luisc3151/sga-mpr:v1
+    env_file:
+      - .env.development.local
+    environment:
+      - PORT=${PORT}
+      - MONGODB_URI=${COMPOSE_MONGODB_URI}
+    ports:
+      - '3003:3003'
+    depends_on:
+      - sgamongodb
+    networks:
+      - sga-network
+
+networks:
+  sga-network:
+    driver: bridge
