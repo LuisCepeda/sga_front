@@ -9,8 +9,58 @@ Para el funcionamiento completo del proyecto es necesario tener
 - Contenedor de [`sga-geo`](https://github.com/LuisCepeda/sga_geo) (en desarrollo)
 - Contenedor de [`sga-mpr`](https://github.com/LuisCepeda/sga_mpr)
 
+Para ello puede usarse el docker-compose, el cual requiere de un archivo con las siguientes variables de entorno (en el drive del proyecto se encuentra el archivo .env.development.local)
 
-First, run the development server:
+```
+# MongoDB
+COMPOSE_MONGO_INITDB_ROOT_USERNAME
+COMPOSE_MONGO_INITDB_ROOT_PASSWORD
+COMPOSE_MONGO_INITDB_DATABASE
+
+# PostgreSQL
+COMPOSE_POSTGRES_USER
+COMPOSE_POSTGRES_PASSWORD
+COMPOSE_POSTGRES_DB
+
+# sgaapi
+PORT=3003
+COMPOSE_MONGODB_URI
+
+# sgausers
+USERS_SERVICE_PORT
+USERS_DATABASE_URL
+
+# sgaauth
+AUTH_SERVICE_PORT
+AUTH_USERS_DOMAIN
+AUTH_JWT_SECRET
+
+# sgageo
+GEO_SERVICE_PORT
+```
+
+Primero, ejecute el docker compose:
+
+```bash
+docker compose --env-file .env.development.local up --build  -d
+```
+Verificar que los contenedores se esten ejecutando correctamente.
+
+El proyecto hace uso de las siguientes variables de entorno (.env.local):
+
+```
+NEXT_PUBLIC_AUTH_API
+NEXT_PUBLIC_REFORESTATION_PROJECTS_API
+NEXT_PUBLIC_GEO_API
+
+NEXTAUTH_URL
+
+NEXTAUTH_SECRET
+
+BASE_URL
+```
+
+Ya con las variables de entorno establecidas se ejecuta el proyecto usando el siguiente comando
 
 ```bash
 npm run dev
@@ -22,9 +72,12 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrir [http://localhost:3000](http://localhost:3000) en el navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+
+
+
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
