@@ -74,7 +74,7 @@ export function ProjectDataProvider({ children }: ProjectDataProviderProps) {
         //         console.log('error fetching clusters', error)
         //     }
         // }
-        const coords: Coordinate[] = projects.map(project => ([
+        const coords: Coordinate[] = projects?.map(project => ([
             project.location.latitude_degrees, project.location.longitude_degrees
         ]
         ))

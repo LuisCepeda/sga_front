@@ -2,9 +2,9 @@ version: '3.5'
 
 services:
   sgamongodb:
-    container_name: sga_mongodb
-    # image: mongodb
-    image: mongodb-raspberrypi4-unofficial-r7.0.4
+    container_name: sga_mongo_local
+    image: mongodb
+    # image: mongodb-raspberrypi4-unofficial-r7.0.4
     env_file:
       - .env.development.local
     environment:
@@ -17,7 +17,7 @@ services:
       - sga-network
 
   sgapostgresqldb:
-    container_name: sga_postgresdb
+    container_name: sga_postgres_local
     image: postgres:latest
     env_file:
       - .env.development.local
@@ -31,8 +31,8 @@ services:
       - sga-network
 
   sgausers:
-    container_name: sga_users
-    image: luisc3151/sga-users:v1
+    container_name: sga_users_local
+    image: luisc3151/sga-users:latest
     env_file:
       - .env.development.local
     environment:
@@ -46,7 +46,7 @@ services:
       - sga-network
 
   sgaauth:
-    container_name: sga_auth
+    container_name: sga_auth_local
     image: luisc3151/sga-auth:v1
     env_file:
       - .env.development.local
@@ -58,12 +58,12 @@ services:
       - '3002:3002'
     depends_on:
       - sgapostgresqldb
-      - sga_users
+      - sgausers
     networks:
       - sga-network
 
   sgageo:
-    container_name: sga_geo
+    container_name: sga_geo_local
     image: luiscepeda/sga-geo:v1
     env_file:
       - .env.development.local
@@ -75,7 +75,7 @@ services:
       - sga-network
 
   sgaprojects:
-    container_name: sga_mpr
+    container_name: sga_mpr_local
     image: luisc3151/sga-mpr:v1
     env_file:
       - .env.development.local
