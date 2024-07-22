@@ -64,7 +64,7 @@ services:
 
   sgageo:
     container_name: sga_geo_local
-    image: luiscepeda/sga-geo:v1
+    image: luisc3151/sga-geo:latest
     env_file:
       - .env.development.local
     environment:
@@ -76,7 +76,7 @@ services:
 
   sgaprojects:
     container_name: sga_mpr_local
-    image: luisc3151/sga-mpr:v1
+    image: luisc3151/sga-mpr:latest
     env_file:
       - .env.development.local
     environment:
